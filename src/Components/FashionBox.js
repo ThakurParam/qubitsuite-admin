@@ -21,8 +21,8 @@ import { Layout } from "../Pages/Layout";
 import DoneIcon from "@mui/icons-material/Done";
 
 export const FashionBox = () => {
-  const [checkpoints, setCheckpoints] = useState([]);
-  const [currentCheckpoint, setCurrentCheckpoint] = useState({
+  const [fashionBox, setFashionBox] = useState([]);
+  const [currentFashionBox, setCurrentFashionBox] = useState({
     heading: "",
     paragraph: "",
     image: "",
@@ -30,39 +30,39 @@ export const FashionBox = () => {
   const [editIndex, setEditIndex] = useState(null);
 
   const handleInputChange = (field, value) => {
-    setCurrentCheckpoint((prevCheckpoint) => ({
-      ...prevCheckpoint,
+    setCurrentFashionBox((prevFashionBox) => ({
+      ...prevFashionBox,
       [field]: value,
     }));
   };
 
-  const handleAddCheckpoint = () => {
-    if (currentCheckpoint.heading.trim() !== "") {
+  const handleAddFashionBox = () => {
+    if (currentFashionBox.heading.trim() !== "") {
       if (editIndex !== null) {
-        setCheckpoints((prevCheckpoints) =>
-          prevCheckpoints.map((checkpoint, index) =>
-            index === editIndex ? currentCheckpoint : checkpoint
+        setFashionBox((prevFashionBox) =>
+          prevFashionBox.map((fashionBox, index) =>
+            index === editIndex ? currentFashionBox : fashionBox
           )
         );
         setEditIndex(null);
       } else {
-        setCheckpoints((prevCheckpoints) => [
-          ...prevCheckpoints,
-          currentCheckpoint,
+        setFashionBox((prevFashionBox) => [
+          ...prevFashionBox,
+          currentFashionBox,
         ]);
       }
-      setCurrentCheckpoint({ heading: "", paragraph: "", image: "" });
+      setCurrentFashionBox({ heading: "", paragraph: "", image: "" });
     }
   };
 
-  const handleEditCheckpoint = (index) => {
+  const handleEditFashionBox = (index) => {
     setEditIndex(index);
-    setCurrentCheckpoint(checkpoints[index]);
+    setCurrentFashionBox(fashionBox[index]);
   };
 
-  const handleDeleteCheckpoint = (index) => {
-    setCheckpoints((prevCheckpoints) =>
-      prevCheckpoints.filter((_, i) => i !== index)
+  const handleDeleteFashionBox = (index) => {
+    setFashionBox((prevFashionBox) =>
+      prevFashionBox.filter((_, i) => i !== index)
     );
     setEditIndex(null);
   };
@@ -136,18 +136,14 @@ export const FashionBox = () => {
               Cases
             </Typography>
           </Box>
-          <Box sx={{ p: 2 }}>
-            <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-              Collab Checkpoints
-            </Typography>
-
+          <Box sx={{}}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} lg={6}>
                 <Box sx={{ pl: 2 }}>
                   <Typography
-                    sx={{ fontSize: 25, fontWeight: 600, color: "gray" }}
+                    sx={{ fontSize: 18, fontWeight: 600, color: "gray" }}
                   >
-                    Checkpoint Heading
+                    Heading
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
@@ -155,7 +151,7 @@ export const FashionBox = () => {
                       variant="outlined"
                       fullWidth
                       multiline
-                      value={currentCheckpoint.heading}
+                      value={currentFashionBox.heading}
                       onChange={(e) =>
                         handleInputChange("heading", e.target.value)
                       }
@@ -166,9 +162,9 @@ export const FashionBox = () => {
               <Grid item xs={12} md={6} lg={6}>
                 <Box sx={{ pl: 2 }}>
                   <Typography
-                    sx={{ fontSize: 25, fontWeight: 600, color: "gray" }}
+                    sx={{ fontSize: 18, fontWeight: 600, color: "gray" }}
                   >
-                    Checkpoint Paragraph
+                    Paragraph
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
@@ -176,7 +172,7 @@ export const FashionBox = () => {
                       variant="outlined"
                       fullWidth
                       multiline
-                      value={currentCheckpoint.paragraph}
+                      value={currentFashionBox.paragraph}
                       onChange={(e) =>
                         handleInputChange("paragraph", e.target.value)
                       }
@@ -187,8 +183,8 @@ export const FashionBox = () => {
             </Grid>
 
             <Box sx={{ pl: 2, p: 2 }}>
-              <Typography sx={{ fontSize: 25, fontWeight: 600, color: "gray" }}>
-                Checkpoint Image
+              <Typography sx={{ fontSize: 18, fontWeight: 600, color: "gray" }}>
+                logo
               </Typography>
               <input
                 type="file"
@@ -203,7 +199,7 @@ export const FashionBox = () => {
             </Box>
             <Box sx={{ textAlign: "start", mt: 5 }}>
               <Button
-                onClick={handleAddCheckpoint}
+                onClick={handleAddFashionBox}
                 variant="contained"
                 // color="white"
                 sx={{ bgcolor: "#E7591E", borderRadius: "20px" }}
@@ -216,7 +212,7 @@ export const FashionBox = () => {
               </Button>
             </Box>
 
-            {checkpoints.length > 0 && (
+            {fashionBox.length > 0 && (
               <Box sx={{ mt: 2 }}>
                 <Paper>
                   <Table>
@@ -261,27 +257,27 @@ export const FashionBox = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {checkpoints.map((checkpoint, index) => (
+                      {fashionBox.map((fashionBox, index) => (
                         <TableRow key={index}>
                           <TableCell sx={{ fontWeight: 700, color: "red" }}>
-                            {checkpoint.heading}
+                            {fashionBox.heading}
                           </TableCell>
                           <TableCell sx={{ fontWeight: 700, color: "orange" }}>
-                            {checkpoint.paragraph}
+                            {fashionBox.paragraph}
                           </TableCell>
                           <TableCell>
-                            {checkpoint.image && (
-                              <Avatar alt="Image" src={checkpoint.image} />
+                            {fashionBox.image && (
+                              <Avatar alt="Image" src={fashionBox.image} />
                             )}
                           </TableCell>
                           <TableCell>
                             <IconButton
-                              onClick={() => handleEditCheckpoint(index)}
+                              onClick={() => handleEditFashionBox(index)}
                             >
                               <EditIcon sx={{ color: "green" }} />
                             </IconButton>
                             <IconButton
-                              onClick={() => handleDeleteCheckpoint(index)}
+                              onClick={() => handleDeleteFashionBox(index)}
                             >
                               <DeleteIcon sx={{ color: "red" }} />
                             </IconButton>
