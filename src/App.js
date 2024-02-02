@@ -17,6 +17,8 @@ import { Builttech } from "./Components/Builttech";
 
 import { Layout } from "./Pages/Layout";
 import { MobileDrawer } from "./Assets/MobileDrawer";
+import { Colablist } from "./Assets/Colablist";
+import { Accountss } from "./Assets/Accountss";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
           <Route path="/built-tech" element={<Builttech />} />
         </Routes>
       </BrowserRouter>
+      {/* <Colablist /> */}
+      {/* <Accountss /> */}
     </>
   );
 }
