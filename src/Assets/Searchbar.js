@@ -14,11 +14,12 @@ export const Searchbar = () => {
         width: "100%",
         boxSizing: "border-box",
         backgroundColor: "#f5f7fa",
+        marginRight: "50px",
       }}
     >
       <InputAdornment
         position="start"
-        style={{ marginTop: "25px", marginLeft: "10px" }}
+        style={{ marginTop: "20px", marginLeft: "10px" }}
       >
         <SearchIcon />
       </InputAdornment>
@@ -32,7 +33,7 @@ export const Searchbar = () => {
           outline: "none",
           borderRadius: "0 30px 30px 0",
           backgroundColor: "#f5f7fa",
-          height: "30px",
+          height: "20px",
         }}
       />
     </div>

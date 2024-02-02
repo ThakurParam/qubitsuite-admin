@@ -14,15 +14,18 @@ import { Hrm2 } from "./Components/Hrm2";
 import { Laravel } from "./Components/Laravel";
 import { FashionBox } from "./Components/FashionBox";
 import { Builttech } from "./Components/Builttech";
-import { Dashboards } from "./Pages/Dashboards";
+
+import { Layout } from "./Pages/Layout";
+import { MobileDrawer } from "./Assets/MobileDrawer";
 
 function App() {
   return (
     <>
+      {/* <MobileDrawer /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
-          <Route path="/dashboards" element={<Dashboards />} />
+          <Route path="/layout" element={<Layout />} />
           <Route path="/banner" element={<Banner />} />
           <Route path="/collabs" element={<Collabs />} />
           <Route path="/account-billing" element={<AccountBilling />} />
@@ -30,21 +33,9 @@ function App() {
           <Route path="/hrm-2" element={<Hrm2 />} />
           <Route path="/laravel" element={<Laravel />} />
           <Route path="/fashion-box" element={<FashionBox />} />
-          <Route path="/built-tech" element={<FashionBox />} />
+          <Route path="/built-tech" element={<Builttech />} />
         </Routes>
       </BrowserRouter>
-      {/* <Dashboards /> */}
-      {/* <Leftsidebar /> */}
-      {/* <Topbar /> */}
-
-      {/* <Banner />
-      <Collabs />
-      <AccountBilling />
-      <Hrm />
-      <Hrm2 />
-      <Laravel />
-      <FashionBox />
-      <Builttech /> */}
     </>
   );
 }
