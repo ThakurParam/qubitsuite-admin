@@ -72,7 +72,7 @@ export const SignIn = () => {
                     >
                       Log In
                     </Typography>
-                    <Typography
+                    {/* <Typography
                       sx={{
                         fontSize: "22px",
                         fontWeight: 500,
@@ -83,7 +83,7 @@ export const SignIn = () => {
                       }}
                     >
                       Log in here to enter in the Admin mode{" "}
-                    </Typography>
+                    </Typography> */}
                   </Box>
                   <Box sx={{ mt: 8 }}>
                     <Box
