@@ -19,8 +19,89 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Layout } from "../Pages/Layout";
 import DoneIcon from "@mui/icons-material/Done";
+import axios from "axios";
 
 export const FashionBox = () => {
+  const [heading, setHeading] = useState("");
+  const [subHeading, setSubHeading] = useState("");
+  const [caseHeading, setCaseHeading] = useState("");
+  const [caseParagraph, setCaseParagraph] = useState("");
+
+  const handleFashionUpdate = async () => {
+    if (!heading || !subHeading) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-trainee.onrender.com/update-fashionbox/65c329cea4eeaf0b3464ac18";
+      let payload = {
+        fashionBoxHeading: heading,
+        fashionBoxSubheading: subHeading,
+      };
+      try {
+        const response = await axios.patch(endpoint, payload);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const handleCasesUpdate = async () => {
+    console.log(currentFashionBox);
+    if (!caseHeading || !caseParagraph) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-backend.onrender.com/update-fashionbox-cases/65c32a0ca4eeaf0b3464ac1c";
+      let payload = {
+        heading: caseHeading,
+        paragraph: caseParagraph,
+      };
+      try {
+        const response = await axios.patch(endpoint, currentFashionBox);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const [data, setData] = useState([]);
+  const [cases, setCases] = useState([]);
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await axios.get(
+          "https://qbitsuit-trainee.onrender.com/get-fashionBox/"
+        );
+        setData(response.data);
+        setHeading(response.data?.fashionBoxHeading);
+        setSubHeading(response.data?.fashionBoxSubheading);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchdata();
+  }, []);
+
+  useEffect(() => {
+    const casedata = async () => {
+      try {
+        const response = await axios.get(
+          "https://qbitsuit-trainee.onrender.com/get-fashionBox-cases/"
+        );
+
+        setCases(response.data);
+        setCaseHeading(response.data?.heading);
+        setCaseParagraph(response.data?.paragraph);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    casedata();
+  }, []);
+
   const [fashionBox, setFashionBox] = useState([]);
   const [currentFashionBox, setCurrentFashionBox] = useState({
     heading: "",
@@ -66,6 +147,7 @@ export const FashionBox = () => {
     );
     setEditIndex(null);
   };
+  // console.log(cases);
   return (
     <>
       <Layout>
@@ -86,6 +168,8 @@ export const FashionBox = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={heading}
+                      onChange={(e) => setHeading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -103,6 +187,8 @@ export const FashionBox = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={subHeading}
+                      onChange={(e) => setSubHeading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -120,6 +206,7 @@ export const FashionBox = () => {
                       pl: 3,
                       pr: 3,
                     }}
+                    onClick={handleFashionUpdate}
                   >
                     <Typography
                       sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
@@ -136,6 +223,7 @@ export const FashionBox = () => {
               Cases
             </Typography>
           </Box>
+
           <Box sx={{}}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} lg={6}>
@@ -212,7 +300,7 @@ export const FashionBox = () => {
               </Button>
             </Box>
 
-            {fashionBox.length > 0 && (
+            {cases.length > 0 && (
               <Box sx={{ mt: 2 }}>
                 <Paper>
                   <Table>
@@ -257,7 +345,7 @@ export const FashionBox = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {fashionBox.map((fashionBox, index) => (
+                      {cases.map((fashionBox, index) => (
                         <TableRow key={index}>
                           <TableCell sx={{ fontWeight: 700, color: "red" }}>
                             {fashionBox.heading}
@@ -290,6 +378,7 @@ export const FashionBox = () => {
               </Box>
             )}
           </Box>
+
           <Box sx={{ mt: 3, textAlign: "end" }}>
             <Button
               sx={{
@@ -300,6 +389,7 @@ export const FashionBox = () => {
                 pl: 3,
                 pr: 3,
               }}
+              onClick={handleCasesUpdate}
             >
               <Typography
                 sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}

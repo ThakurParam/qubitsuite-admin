@@ -19,8 +19,67 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Layout } from "../Pages/Layout";
 import DoneIcon from "@mui/icons-material/Done";
+import axios from "axios";
 
 export const Hrm2 = () => {
+  const [heading, setHeading] = useState("");
+  const [subHeading, setsubHeading] = useState("");
+  const [aheading, setaheading] = useState("");
+  const [paragraph, setparagraph] = useState("");
+  const handleAcordupdate = async () => {
+    if (!aheading || !paragraph) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-trainee.onrender.com/update-hrm2-accordian/65c99ddf76b733b1d537d702";
+      let payload = {
+        accordianHeading: aheading,
+        accordianParagraph: paragraph,
+      };
+      try {
+        const response = await axios.patch(endpoint, payload);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const handlehrmUpdate = async () => {
+    if (!heading || !subHeading) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-trainee.onrender.com/update-hrm2/65c328b8a4eeaf0b3464ac0a";
+      let payload = {
+        hrm2Heading: heading,
+        hrm2Subheading: subHeading,
+      };
+      try {
+        const response = await axios.patch(endpoint, payload);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const [data, setData] = useState([]);
+  const fetchdata = async () => {
+    try {
+      const response = await axios.get(
+        "https://qbitsuit-trainee.onrender.com/get-hrm2/"
+      );
+      setData(response.data);
+      setHeading(response.data?.hrm2Heading);
+      setsubHeading(response.data?.hrm2Subheading);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
   const [hrm, setHrm] = useState([]);
   const [currentHrm, setCurrentHrm] = useState({
     heading: "",
@@ -78,6 +137,8 @@ export const Hrm2 = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={heading}
+                      onChange={(e) => setHeading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -106,6 +167,8 @@ export const Hrm2 = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={subHeading}
+                      onChange={(e) => setsubHeading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -123,6 +186,7 @@ export const Hrm2 = () => {
                       pl: 3,
                       pr: 3,
                     }}
+                    onClick={handlehrmUpdate}
                   >
                     <Typography
                       sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
@@ -278,6 +342,7 @@ export const Hrm2 = () => {
                   pl: 3,
                   pr: 3,
                 }}
+                onClick={handleAcordupdate}
               >
                 <Typography
                   sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
@@ -286,24 +351,6 @@ export const Hrm2 = () => {
                 </Typography>
               </Button>
             </Box>
-          </Box>
-          <Box sx={{ textAlign: "end", p: 2 }}>
-            <Button
-              sx={{
-                textTransform: "none",
-                bgcolor: "green",
-                color: "white",
-                p: 1,
-                pl: 3,
-                pr: 3,
-              }}
-            >
-              <Typography
-                sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
-              >
-                Update
-              </Typography>
-            </Button>
           </Box>
         </Box>
       </Layout>

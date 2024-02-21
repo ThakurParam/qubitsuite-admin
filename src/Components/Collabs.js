@@ -19,13 +19,70 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Layout } from "../Pages/Layout";
 import DoneIcon from "@mui/icons-material/Done";
+import axios from "axios";
 
 export const Collabs = () => {
+  const [heading, setHeading] = useState("");
+  const [subHeading, setSubHeading] = useState("");
+  const [paragraph, setParagraph] = useState("");
+  const [checkPointHeading, setcheckPointHeading] = useState("");
+  const [checkPointParagraph, setcheckPointParagraph] = useState("");
+  const [checkPointUrl, setcheckPointUrl] = useState("");
+  // api integration start from here /////////
+  const handleCollabUpdate = async () => {
+    if (!heading || !paragraph || !subHeading) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-backend.onrender.com/update-collabs/65c327a6a4eeaf0b3464abfc";
+      let payload = [
+        {
+          collabHeading: heading,
+          collabSubheading: subHeading,
+          collabParagraph: paragraph,
+        },
+        {
+          checkPointHeading: checkPointHeading,
+          checkPointParagraph: checkPointParagraph,
+          checkPointUrl: checkPointUrl,
+        },
+      ];
+      try {
+        const response = await axios.patch(endpoint, payload);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const [data, setData] = useState([]);
+  const fetchdata = async () => {
+    try {
+      const response = await axios.get(
+        "https://qbitsuit-trainee.onrender.com/get-collab/"
+      );
+      setData(response.data);
+      setHeading(response.data?.collabHeading);
+      setSubHeading(response.data?.collabSubheading);
+      setParagraph(response.data?.collabParagraph);
+      setcheckPointHeading(response.data?.checkPointHeading);
+      setcheckPointParagraph(response.data?.checkPointParagraph);
+      setcheckPointUrl(response.data?.checkPointUrl);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchdata();
+  }, []);
+  console.log(data);
+  // Table type content here//////////////////////////
   const [checkpoints, setCheckpoints] = useState([]);
   const [currentCheckpoint, setCurrentCheckpoint] = useState({
-    heading: "",
-    paragraph: "",
-    image: "",
+    checkPointHeading: "",
+    checkPointParagraph: "",
+    checkPointUrl: "",
   });
   const [editIndex, setEditIndex] = useState(null);
 
@@ -51,7 +108,11 @@ export const Collabs = () => {
           currentCheckpoint,
         ]);
       }
-      setCurrentCheckpoint({ heading: "", paragraph: "", image: "" });
+      setCurrentCheckpoint({
+        checkPointHeading: "",
+        checkPointParagraph: "",
+        checkPointUrl: "",
+      });
     }
   };
 
@@ -84,6 +145,8 @@ export const Collabs = () => {
                 </Typography>
                 <div style={{ marginTop: "15px" }}>
                   <TextField
+                    value={heading}
+                    onChange={(e) => setHeading(e.target.value)}
                     label="Heading"
                     variant="outlined"
                     fullWidth
@@ -102,6 +165,8 @@ export const Collabs = () => {
                 </Typography>
                 <div style={{ marginTop: "15px" }}>
                   <TextField
+                    value={subHeading}
+                    onChange={(e) => setSubHeading(e.target.value)}
                     label="Heading"
                     variant="outlined"
                     fullWidth
@@ -117,12 +182,33 @@ export const Collabs = () => {
             </Typography>
             <div style={{ marginTop: "15px" }}>
               <TextField
+                value={paragraph}
+                onChange={(e) => setParagraph(e.target.value)}
                 label="Heading"
                 variant="outlined"
                 fullWidth
                 multiline
               />
             </div>
+          </Box>
+          <Box sx={{ mt: 3, textAlign: "end" }}>
+            <Button
+              sx={{
+                textTransform: "none",
+                bgcolor: "green",
+                color: "white",
+                p: 1,
+                pl: 3,
+                pr: 3,
+              }}
+              onClick={handleCollabUpdate}
+            >
+              <Typography
+                sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
+              >
+                Update
+              </Typography>
+            </Button>
           </Box>
         </Box>
         <Box sx={{ p: 2 }}>
@@ -144,7 +230,7 @@ export const Collabs = () => {
                     variant="outlined"
                     fullWidth
                     multiline
-                    value={currentCheckpoint.heading}
+                    value={currentCheckpoint.checkPointHeading}
                     onChange={(e) =>
                       handleInputChange("heading", e.target.value)
                     }
@@ -165,7 +251,7 @@ export const Collabs = () => {
                     variant="outlined"
                     fullWidth
                     multiline
-                    value={currentCheckpoint.paragraph}
+                    value={currentCheckpoint.checkPointParagraph}
                     onChange={(e) =>
                       handleInputChange("paragraph", e.target.value)
                     }
@@ -237,14 +323,17 @@ export const Collabs = () => {
                     {checkpoints.map((checkpoint, index) => (
                       <TableRow key={index}>
                         <TableCell sx={{ fontWeight: 700, color: "red" }}>
-                          {checkpoint.heading}
+                          {checkpoint.checkPointHeading}
                         </TableCell>
                         <TableCell sx={{ fontWeight: 700, color: "orange" }}>
-                          {checkpoint.paragraph}
+                          {checkpoint.checkPointParagraph}
                         </TableCell>
                         <TableCell>
                           {checkpoint.image && (
-                            <Avatar alt="Image" src={checkpoint.image} />
+                            <Avatar
+                              alt="Image"
+                              src={checkpoint.checkPointUrl}
+                            />
                           )}
                         </TableCell>
                         <TableCell>
@@ -277,6 +366,7 @@ export const Collabs = () => {
               pl: 3,
               pr: 3,
             }}
+            onClick={handleCollabUpdate}
           >
             <Typography
               sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}

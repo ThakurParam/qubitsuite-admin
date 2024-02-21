@@ -1,8 +1,86 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../Pages/Layout";
+import axios from "axios";
 
 export const Builttech = () => {
+  const [heading, setHeading] = useState("");
+  const [subHeading, setSubHeading] = useState("");
+  const [cardheading, setCardheading] = useState("");
+  const [paragraph, setParagraph] = useState("");
+  const [image, setImage] = useState("");
+
+  const handleUpdate = async () => {
+    if (!heading || !subHeading) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-backend.onrender.com/update-builtTech/65c32a52a4eeaf0b3464ac20";
+      let payload = {
+        builtHeading: heading,
+        builtSubheading: subHeading,
+      };
+      try {
+        const response = await axios.patch(endpoint, payload);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const handleCasesUpdate = async () => {
+    if (!cardheading || !paragraph || !image) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-backend.onrender.com/update-builtTech-Cards/65c60c25151b46ec3da01dbd";
+      let payload = {
+        cardheading: cardheading,
+        cardParagraph: paragraph,
+        cardUrl: image,
+      };
+      try {
+        const response = await axios.patch(endpoint, payload);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const [data, setData] = useState([]);
+
+  const fetchdata = async () => {
+    try {
+      const response = await axios.get(
+        "https://qbitsuit-trainee.onrender.com/get-builtech/"
+      );
+      setData(response.data);
+      setHeading(response.data?.builtHeading);
+      setSubHeading(response.data?.builtSubheading);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const [cardData, setcardData] = useState([]);
+  const carddata = async () => {
+    try {
+      const response = await axios.get(
+        "https://qbitsuit-trainee.onrender.com/get-builtTechCards/"
+      );
+      setcardData(response.data);
+      setCardheading(response.data?.cardheading);
+      setParagraph(response.data?.cardParagraph);
+      setImage(response.data?.cardUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchdata();
+    carddata();
+  }, []);
+  console.log(data);
   return (
     <>
       <Layout>
@@ -24,6 +102,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={heading}
+                      onChange={(e) => setHeading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -41,6 +121,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={subHeading}
+                      onChange={(e) => setSubHeading(e.target.value)}
                       label="Sub heading"
                       variant="outlined"
                       fullWidth
@@ -60,6 +142,7 @@ export const Builttech = () => {
                   pl: 3,
                   pr: 3,
                 }}
+                onClick={handleUpdate}
               >
                 <Typography
                   sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
@@ -102,6 +185,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={paragraph}
+                      onChange={(e) => setParagraph(e.target.value)}
                       label="Para here .."
                       variant="outlined"
                       fullWidth
@@ -119,6 +204,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={heading}
+                      onChange={(e) => setHeading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -138,6 +225,7 @@ export const Builttech = () => {
                   pl: 3,
                   pr: 3,
                 }}
+                onClick={handleCasesUpdate}
               >
                 <Typography
                   sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
@@ -174,6 +262,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={paragraph}
+                      onChange={(e) => setParagraph(e.target.value)}
                       label="Para here .."
                       variant="outlined"
                       fullWidth
@@ -191,6 +281,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={cardheading}
+                      onChange={(e) => setCardheading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -210,6 +302,7 @@ export const Builttech = () => {
                   pl: 3,
                   pr: 3,
                 }}
+                onClick={handleCasesUpdate}
               >
                 <Typography
                   sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
@@ -246,6 +339,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={paragraph}
+                      onChange={(e) => setParagraph(e.target.value)}
                       label="Para here .."
                       variant="outlined"
                       fullWidth
@@ -263,6 +358,8 @@ export const Builttech = () => {
                   </Typography>
                   <div style={{ marginTop: "15px" }}>
                     <TextField
+                      value={cardheading}
+                      onChange={(e) => setCardheading(e.target.value)}
                       label="Heading"
                       variant="outlined"
                       fullWidth
@@ -282,6 +379,7 @@ export const Builttech = () => {
                   pl: 3,
                   pr: 3,
                 }}
+                onClick={handleCasesUpdate}
               >
                 <Typography
                   sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}
