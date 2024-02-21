@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       {/* <MobileDrawer /> */}
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/layout" element={<Layout />} />
@@ -39,10 +39,10 @@ function App() {
           <Route path="/fashion-box" element={<FashionBox />} />
           <Route path="/built-tech" element={<Builttech />} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
       {/* <Colablist /> */}
       {/* <Accountss /> */}
-      <Apitable />
+      {/* <Apitable /> */}
       {/* <Tabless /> */}
     </>
   );
