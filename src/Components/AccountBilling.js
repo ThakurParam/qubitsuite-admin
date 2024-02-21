@@ -29,6 +29,8 @@ export const AccountBilling = () => {
   const [accountHeading, setAccountHeading] = useState("");
   const [accountSubHeading, setAccountSubHeading] = useState("");
   const [image, setImage] = useState("");
+  const [data, setData] = useState([]);
+  const [cord, setCord] = useState([]);
   const handleModuleUpdate = async () => {
     if (!heading || !subHeading) {
       alert("please fill the details ");
@@ -66,8 +68,7 @@ export const AccountBilling = () => {
       }
     }
   };
-  const [data, setData] = useState([]);
-  const [cord, setCord] = useState({});
+
   const fetchdata = async () => {
     try {
       const response = await axios.get(
