@@ -154,7 +154,7 @@ export const Leftsidebar = () => {
                 </Typography>
               </ListItemText>
             </ListItem>
-            <ListItem
+            {/* <ListItem
               button
               key="hrm"
               // onClick={() => handleTabClick("hrm")}
@@ -186,7 +186,7 @@ export const Leftsidebar = () => {
                   Hrm
                 </Typography>
               </ListItemText>
-            </ListItem>
+            </ListItem> */}
             <ListItem
               button
               key="hrm2nd"

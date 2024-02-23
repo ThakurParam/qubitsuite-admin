@@ -34,19 +34,33 @@ export const Collabs = () => {
       alert("please fill the details ");
     } else {
       const endpoint =
-        "https://qbitsuit-backend.onrender.com/update-collabs/65c327a6a4eeaf0b3464abfc";
-      let payload = [
-        {
-          collabHeading: heading,
-          collabSubheading: subHeading,
-          collabParagraph: paragraph,
-        },
-        {
-          checkPointHeading: checkPointHeading,
-          checkPointParagraph: checkPointParagraph,
-          checkPointUrl: checkPointUrl,
-        },
-      ];
+        "https://qbitsuit-backend.onrender.com/update-collabs/65d48b957a3131267418fdc5";
+      let payload = {
+        collabHeading: heading,
+        collabSubheading: subHeading,
+        collabParagraph: paragraph,
+      };
+
+      try {
+        const response = await axios.patch(endpoint, payload);
+        console.log("Data updated successfully:", response.data);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const handleCheckpointUpdate = async () => {
+    if (!checkPointHeading || !checkPointParagraph) {
+      alert("please fill the details ");
+    } else {
+      const endpoint =
+        "https://qbitsuit-backend.onrender.com/update-collabs-checkPoints/65d48f05ff425d61894c1557";
+      let payload = {
+        checkPointHeading: checkPointHeading,
+        checkPointParagraph: checkPointParagraph,
+        checkPointUrl: checkPointUrl,
+      };
+
       try {
         const response = await axios.patch(endpoint, payload);
         console.log("Data updated successfully:", response.data);
@@ -56,6 +70,7 @@ export const Collabs = () => {
     }
   };
   const [data, setData] = useState([]);
+  const [check, setCheck] = useState([]);
   const fetchdata = async () => {
     try {
       const response = await axios.get(
@@ -65,6 +80,19 @@ export const Collabs = () => {
       setHeading(response.data?.collabHeading);
       setSubHeading(response.data?.collabSubheading);
       setParagraph(response.data?.collabParagraph);
+
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const checkdata = async () => {
+    try {
+      const response = await axios.get(
+        "https://qbitsuit-trainee.onrender.com/get-collab-checkPoints/"
+      );
+      setCheck(response.data);
+
       setcheckPointHeading(response.data?.checkPointHeading);
       setcheckPointParagraph(response.data?.checkPointParagraph);
       setcheckPointUrl(response.data?.checkPointUrl);
@@ -73,8 +101,10 @@ export const Collabs = () => {
       console.log(error);
     }
   };
+  console.log(check);
   useEffect(() => {
     fetchdata();
+    checkdata();
   }, []);
   console.log(data);
   // Table type content here//////////////////////////
@@ -94,7 +124,7 @@ export const Collabs = () => {
   };
 
   const handleAddCheckpoint = () => {
-    if (currentCheckpoint.heading.trim() !== "") {
+    if (currentCheckpoint.checkPointHeading.trim() !== "") {
       if (editIndex !== null) {
         setCheckpoints((prevCheckpoints) =>
           prevCheckpoints.map((checkpoint, index) =>
@@ -291,7 +321,7 @@ export const Collabs = () => {
             </Button>
           </Box>
 
-          {checkpoints.length > 0 && (
+          {check.length > 0 && (
             <Box sx={{ mt: 2 }}>
               <Paper>
                 <Table>
@@ -320,7 +350,7 @@ export const Collabs = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {checkpoints.map((checkpoint, index) => (
+                    {check.map((checkpoint, index) => (
                       <TableRow key={index}>
                         <TableCell sx={{ fontWeight: 700, color: "red" }}>
                           {checkpoint.checkPointHeading}
@@ -329,7 +359,7 @@ export const Collabs = () => {
                           {checkpoint.checkPointParagraph}
                         </TableCell>
                         <TableCell>
-                          {checkpoint.image && (
+                          {checkpoint.checkPointUrl && (
                             <Avatar
                               alt="Image"
                               src={checkpoint.checkPointUrl}
@@ -366,7 +396,7 @@ export const Collabs = () => {
               pl: 3,
               pr: 3,
             }}
-            onClick={handleCollabUpdate}
+            onClick={handleCheckpointUpdate}
           >
             <Typography
               sx={{ fontSize: 18, fontWeight: 600, letterSpacing: 2 }}

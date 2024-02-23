@@ -21,6 +21,7 @@ import { Colablist } from "./Assets/Colablist";
 import { Accountss } from "./Assets/Accountss";
 import { Apitable } from "./Assets/Apitable";
 import { Tabless } from "./Assets/Tabless";
+import CollabsTable from "./Assets/CollabsTable";
 
 function App() {
   return (
@@ -33,17 +34,18 @@ function App() {
           <Route path="/banner" element={<Banner />} />
           <Route path="/collabs" element={<Collabs />} />
           <Route path="/account-billing" element={<AccountBilling />} />
-          <Route path="/hrm" element={<Hrm />} />
           <Route path="/hrm-2" element={<Hrm2 />} />
           <Route path="/laravel" element={<Laravel />} />
           <Route path="/fashion-box" element={<FashionBox />} />
           <Route path="/built-tech" element={<Builttech />} />
         </Routes>
       </BrowserRouter>
+      {/* <Route path="/hrm" element={<Hrm />} /> */}
       {/* <Colablist /> */}
       {/* <Accountss /> */}
       {/* <Apitable /> */}
       {/* <Tabless /> */}
+      {/* <CollabsTable /> */}
     </>
   );
 }

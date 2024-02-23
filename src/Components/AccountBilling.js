@@ -29,8 +29,6 @@ export const AccountBilling = () => {
   const [accountHeading, setAccountHeading] = useState("");
   const [accountSubHeading, setAccountSubHeading] = useState("");
   const [image, setImage] = useState("");
-  const [data, setData] = useState([]);
-  const [cord, setCord] = useState([]);
   const handleModuleUpdate = async () => {
     if (!heading || !subHeading) {
       alert("please fill the details ");
@@ -68,7 +66,8 @@ export const AccountBilling = () => {
       }
     }
   };
-
+  const [data, setData] = useState([]);
+  const [cord, setCord] = useState([]);
   const fetchdata = async () => {
     try {
       const response = await axios.get(
@@ -94,7 +93,7 @@ export const AccountBilling = () => {
       console.log(error);
     }
   };
-  console.log(cord);
+  console.log(data);
   const [mdata, setmData] = useState([]);
   const moduledata = async () => {
     try {
@@ -114,45 +113,6 @@ export const AccountBilling = () => {
     accorddata();
     moduledata();
   }, []);
-  // const [accord, setAccord] = useState([]);
-  // const [currentAccord, setCurrentAccord] = useState({
-  //   accordianHeading: "",
-  //   accordianParagraph: "",
-  // });
-  // const [editIndex, setEditIndex] = useState(null);
-
-  // const handleInputChange = (field, value) => {
-  //   setCurrentAccord((prevAccord) => ({
-  //     ...prevAccord,
-  //     [field]: value,
-  //   }));
-  // };
-
-  // const handleAddAccord = () => {
-  //   if (currentAccord.heading.trim() !== "") {
-  //     if (editIndex !== null) {
-  //       setAccord((prevAccord) =>
-  //         prevAccord.map((accord, index) =>
-  //           index === editIndex ? currentAccord : accord
-  //         )
-  //       );
-  //       setEditIndex(null);
-  //     } else {
-  //       setAccord((prevAccord) => [...prevAccord, currentAccord]);
-  //     }
-  //     setCurrentAccord({ heading: "", paragraph: "" });
-  //   }
-  // };
-
-  // const handleEditAccord = (index) => {
-  //   setEditIndex(index);
-  //   setCurrentAccord(accord[index]);
-  // };
-
-  // const handleDeleteAccord = (index) => {
-  //   setAccord((prevAccord) => prevAccord.filter((_, i) => i !== index));
-  //   setEditIndex(null);
-  // };
 
   const [editIndex, setEditIndex] = useState(null);
   const [newEntry, setNewEntry] = useState({
@@ -178,7 +138,6 @@ export const AccountBilling = () => {
     setData([...data, newEntry]);
     setNewEntry({ accordianHeading: "", accordianParagraph: "" });
   };
-  console.log(data);
   return (
     <>
       <Layout>
@@ -339,133 +298,6 @@ export const AccountBilling = () => {
               </Typography>
             </Box>
             <Box sx={{ mt: 8 }}>
-              {/* <Box> */}
-              {/* <Box sx={{ mt: 8 }}>
-                  <Grid container spacing={2} sx={{ mt: 2 }}>
-                    <Grid item xs={12} md={6} lg={6}>
-                      <Box>
-                        <Typography
-                          sx={{ fontSize: 15, fontWeight: 600, color: "gray" }}
-                        >
-                          Heading
-                        </Typography>
-                        <div>
-                          <TextField
-                            label="Place your text here..."
-                            variant="outlined"
-                            fullWidth
-                            multiline
-                            value={currentAccord.heading}
-                            onChange={(e) =>
-                              handleInputChange("heading", e.target.value)
-                            }
-                            style={{ marginTop: "10px" }}
-                          />
-                        </div>
-                      </Box>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6}>
-                      <Box>
-                        <Typography
-                          sx={{ fontSize: 15, fontWeight: 600, color: "gray" }}
-                        >
-                          Paragraph
-                        </Typography>
-                        <div>
-                          <TextField
-                            label="Para here..."
-                            variant="outlined"
-                            fullWidth
-                            multiline
-                            value={currentAccord.paragraph}
-                            onChange={(e) =>
-                              handleInputChange("paragraph", e.target.value)
-                            }
-                            style={{ marginTop: "10px" }}
-                          />
-                        </div>
-                      </Box>
-                      <Box sx={{ mt: 3, textAlign: "end" }}>
-                        <Button
-                          onClick={handleAddAccord}
-                          variant="contained"
-                          sx={{ bgcolor: "#E7591E", borderRadius: "20px" }}
-                        >
-                          {editIndex !== null ? (
-                            <DoneIcon sx={{ fontSize: 40 }} />
-                          ) : (
-                            <AddIcon sx={{ fontSize: 40 }} />
-                          )}
-                        </Button>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box> */}
-              {/* {cord.length > 0 && (
-                  <Box sx={{ mt: 2 }}>
-                    <Paper>
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                fontWeight: 800,
-                                fontSize: 18,
-                                color: "purple",
-                              }}
-                            >
-                              Heading
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                fontWeight: 800,
-                                fontSize: 18,
-                                color: "purple",
-                              }}
-                            >
-                              Paragraph
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                fontWeight: 800,
-                                fontSize: 18,
-                                color: "purple",
-                              }}
-                            >
-                              Action
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell sx={{ fontWeight: 700, color: "red" }}>
-                              {cord.accordianHeading}
-                            </TableCell>
-                            <TableCell
-                              sx={{ fontWeight: 700, color: "orange" }}
-                            >
-                              {cord.accordianParagraph}
-                            </TableCell>
-                            {/* <TableCell>
-                              <IconButton
-                              // onClick={() => handleEditAccord(index)}
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                              // onClick={() => handleDeleteAccord(index)}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </TableCell> */}
-              {/* </TableRow>
-                        </TableBody>
-                      </Table>
-                    </Paper>
-                  </Box>
-                )} */}
-
-              {/* // </Box> */}
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
@@ -476,14 +308,14 @@ export const AccountBilling = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* {data.map((entry, index) => (
+                    {cord.map((entry, index) => (
                       <TableRow key={index}>
                         <TableCell>
                           {editIndex === index ? (
                             <TextField
-                              value={cord.accordianHeading}
+                              value={entry.accordianHeading}
                               onChange={(e) => {
-                                const newData = [...data];
+                                const newData = [...cord];
                                 newData[index].accordianHeading =
                                   e.target.value;
                                 setData(newData);
@@ -496,7 +328,7 @@ export const AccountBilling = () => {
                         <TableCell>
                           {editIndex === index ? (
                             <TextField
-                              value={cord.accordianParagraph}
+                              value={entry.accordianParagraph}
                               onChange={(e) => {
                                 const newData = [...data];
                                 newData[index].accordianParagraph =
@@ -523,7 +355,7 @@ export const AccountBilling = () => {
                           )}
                         </TableCell>
                       </TableRow>
-                    ))} */}
+                    ))}
                     <TableRow>
                       <TableCell>
                         <TextField
